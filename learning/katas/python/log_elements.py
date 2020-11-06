@@ -1,54 +1,57 @@
-#   Licensed to the Apache Software Foundation (ASF) under one
-#   or more contributor license agreements.  See the NOTICE file
-#   distributed with this work for additional information
-#   regarding copyright ownership.  The ASF licenses this file
-#   to you under the Apache License, Version 2.0 (the
-#   "License"); you may not use this file except in compliance
-#   with the License.  You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
 
-import apache_beam as beam
+#libary 
+import  Apache Beam as beam
+import os 
+
+#libary connvitity
+#program has transform also
+import time
+print("you wanna login or signing write log in or sign in")
+ele3 = input()
+log = "log"
+sign= "sign"
+#logelement function transform 
+def Logelement(beam.PTransform)
+if log ==ele3:
+	           print("enter the user id ")
+	           ele1  = input() 
+	           print("enter the password")
+	           with_window  = input()
+	           timestamp = time.time()
+	           print(timestamp)
+	           result = time.gmtime(timestamp)
+	           print("result",result)
+	           print(result.tm_year)
+	           print(result.tm_hour)  
+# path of the current script 
+
+path = '/storage/emulated/0/qpython/Turtle animation/github pro'
+
+  
+# Before creating 
+
+dir_list = os.listdir(path)  
+
+print("List of directories and files before creation:") 
+
+print(dir_list) 
 
 
-class LogElements(beam.PTransform):
 
-    class _LoggingFn(beam.DoFn):
+  
+# Creates a new file 
+f =j=  open('myfile.txt', 'w')
+    
+f.write("hii")
 
-        def __init__(self, prefix='', with_timestamp=False, with_window=False):
-            super(LogElements._LoggingFn, self).__init__()
-            self.prefix = prefix
-            self.with_timestamp = with_timestamp
-            self.with_window = with_window
+dir_list = os.listdir(path) 
+print("List of directories and files after creation:") 
 
-        def process(self, element, timestamp=beam.DoFn.TimestampParam,
-                    window=beam.DoFn.WindowParam, **kwargs):
-            log_line = self.prefix + str(element)
+print(dir_list)
+m = open("myfile.txt", "r")
+k = m.readline(5)
+print("enter the ele4")
+ele4 = input()
+if k ==ele4:
+	print("logging")
 
-            if self.with_timestamp:
-                log_line += ', timestamp=' + repr(timestamp.to_rfc3339())
-
-            if self.with_window:
-                log_line += ', window(start=' + window.start.to_rfc3339()
-                log_line += ', end=' + window.end.to_rfc3339() + ')'
-
-            print(log_line)
-            yield element
-
-    def __init__(self, label=None, prefix='',
-                 with_timestamp=False, with_window=False):
-        super(LogElements, self).__init__(label)
-        self.prefix = prefix
-        self.with_timestamp = with_timestamp
-        self.with_window = with_window
-
-    def expand(self, input):
-        input | beam.ParDo[
-                self._LoggingFn(self.prefix, self.with_timestamp,
-                                self.with_window])
